@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class AchievementDTO {
-    private Long achievementId;
+    private Long id;
     private String name;
     private String description;
     private AchievementType type;

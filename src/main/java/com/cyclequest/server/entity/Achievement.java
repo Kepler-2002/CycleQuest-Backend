@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Achievement {
     @Id
-    private Long achievementId;
+    private Long id;
     
     @Column(nullable = false)
     private String name;

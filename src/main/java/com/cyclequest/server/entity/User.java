@@ -10,20 +10,18 @@ import java.util.ArrayList;
 
 // entity/User.java
 @Entity
-@Table(name = "users", indexes = {
-    @Index(name = "idx_username", columnList = "username"),
-    @Index(name = "idx_email", columnList = "email")
-})
+@Table(name = "users")
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "id")
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -37,15 +35,21 @@ public class User {
     private Integer totalRides = 0;
     private Float totalDistance = 0.0f;
     private Long totalRideTime = 0L;
+    private Long createdAt = System.currentTimeMillis();
 
-    private Long createdAt;
-    private Long lastLoginAt;
-    private Long updatedAt;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserAchievement> achievements = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("displayOrder ASC")
+    private List<UserDisplayedAchievement> displayedAchievements = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserSettings settings;
 
     @PrePersist
     protected void onCreate() {
         createdAt = System.currentTimeMillis();
-        updatedAt = System.currentTimeMillis();
     }
 
     @PreUpdate
@@ -53,13 +57,6 @@ public class User {
         updatedAt = System.currentTimeMillis();
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserSettings settings;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<UserAchievement> achievements = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @OrderBy("displayOrder ASC")
-    private List<UserDisplayedAchievement> displayedAchievements = new ArrayList<>();
+    private Long lastLoginAt;
+    private Long updatedAt;
 }

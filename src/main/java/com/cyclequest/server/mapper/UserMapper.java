@@ -5,14 +5,23 @@ import com.cyclequest.server.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", imports = {System.class}, uses = {AchievementMapper.class})
+@Mapper(componentModel = "spring", uses = {AchievementMapper.class})
 public interface UserMapper {
-    @Mapping(source = "userId", target = "id")
-    @Mapping(target = "createdAt", expression = "java(user.getCreatedAt())")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "username", source = "username")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "avatarUrl", source = "avatarUrl")
+    @Mapping(target = "status", source = "status")
+    @Mapping(target = "totalRides", source = "totalRides")
+    @Mapping(target = "totalDistance", source = "totalDistance")
+    @Mapping(target = "totalRideTime", source = "totalRideTime")
+    @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "achievements", source = "achievements")
-    @Mapping(target = "displayedAchievements", expression = "java(user.getDisplayedAchievements().stream().map(da -> da.getAchievement()).collect(java.util.stream.Collectors.toList()))")
+    @Mapping(target = "displayedAchievements", expression = "java(user.getDisplayedAchievements().stream().map(da -> achievementMapper.toDTO(da.getAchievement())).collect(java.util.stream.Collectors.toList()))")
     UserDTO.UserInfo toUserInfo(User user);
     
-    @Mapping(target = "user", source = ".")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "username", source = "username")
+    @Mapping(target = "email", source = "email")
     UserDTO.RegisterResponse toRegisterResponse(User user);
 }

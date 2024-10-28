@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 用户相关的数据传输对象
  */
@@ -35,7 +37,9 @@ public class UserDTO {
 
     @Data
     public static class RegisterResponse {
-        private UserInfo user;
+        private Long id;
+        private String username;
+        private String email;
     }
 
     @Data
