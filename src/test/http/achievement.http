@@ -1,0 +1,20 @@
+### 获取用户的所有成就
+GET http://localhost:8080/api/achievements/users/1
+
+### 更新成就进度 (骑行100公里成就)
+PUT http://localhost:8080/api/achievements/users/1/1/progress?progress=50.0
+
+### 更新成就进度 (骑行1000公里成就)
+PUT http://localhost:8080/api/achievements/users/1/2/progress?progress=75.5
+
+### 更新成就进度到100%来解锁成就
+PUT http://localhost:8080/api/achievements/users/1/1/progress?progress=100.0
+
+### 测试无效的进度值（应该返回错误）
+PUT http://localhost:8080/api/achievements/users/1/1/progress?progress=101.0
+
+### 测试不存在的用户（应该返回错误）
+GET http://localhost:8080/api/achievements/users/999
+
+### 测试不存在的成就ID（应该返回错误）
+PUT http://localhost:8080/api/achievements/users/1/999/progress?progress=50.0

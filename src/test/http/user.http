@@ -3,10 +3,34 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-  "username": "testuser3",
-  "email": "test3@example.com",
+  "username": "testuser1",
+  "email": "test1@example.com",
   "password": "password123"
 }
 
+### 注册另一个用户
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "email": "test2@example.com",
+  "password": "password456"
+}
+
 ### 获取用户信息
-GET http://localhost:8080/api/users/4
+GET http://localhost:8080/api/users/1
+
+### 获取用户设置
+GET http://localhost:8080/api/users/1/settings
+
+### 更新用户设置
+PUT http://localhost:8080/api/users/1/settings
+Content-Type: application/json
+
+{
+  "isDarkMode": true,
+  "isNotificationEnabled": false,
+  "language": "zh_CN",
+  "showDistance": true
+}
